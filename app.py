@@ -3,11 +3,9 @@ import requests
 import time
 from datetime import datetime
 
-# Conectar ao banco
 conn = sqlite3.connect('dados_financeiros.db')
 cursor = conn.cursor()
 
-# Criar tabela se não existir
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS taxas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,17 +20,17 @@ print("🚀 Iniciando coleta de dados da BrasilAPI...\n")
 
 try:
     while True:
-        # Obter os dados da API
+        
         url = 'https://brasilapi.com.br/api/taxas/v1'
         response = requests.get(url)
         dados = response.json()
 
-        # Registrar horário da coleta
+        
         coleta_hora = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         print(f"\n🕒 Coleta realizada em: {coleta_hora}")
         print("📥 Dados obtidos da API:")
 
-        # Inserir dados no banco e exibir no terminal
+        
         for item in dados:
             nome = item['nome']
             valor = item['valor']
